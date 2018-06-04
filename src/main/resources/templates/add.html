@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Add new article</title>
+</head>
+<body>
+	<h1>Add new article</h1>
+	<h2><a href="/article">Back to home page</a></h2>
+	<form action="/add" method="post">
+		ID<input type="text" th:field="${article.id}" placeholder="ID" /> <br/>
+		Name<input type="text" th:field="${article.name}" placeholder="Article Name" /> <br/>
+		Description<input type="text" th:field="${article.description}" placeholder="Description" /> <br/>
+		Author<input type="text" th:field="${article.author}" placeholder="Author" /> <br/>
+		<input type="submit" value="Submit" />
+	</form>
+</body>
+</html>
