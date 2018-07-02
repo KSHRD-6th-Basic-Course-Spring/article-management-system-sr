@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8"/>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<title>Article List</title>
+<style>
+	table,tr,td,th {
+		border: 1px solid black;
+		border-collapse: collapse
+	}
+</style>
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>Title</th>
+				<th>Description</th>
+				<th>Author</th>
+				<th>Category</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+		</tbody>
+	</table>
+	<button id="getArticle">Get Article</button>
+	
+	<script>
+		$(document).ready(function() {
+			$("#getArticle").click(function() {
+				$.ajax({
+					url: "/api/v1/articles",
+					method: "GET",
+					success: function(data) {
+						if (data.status) {
+							data.data.forEach(function(d) {
+								var tr = `
+									<tr>
+										<td>` + d.id + `</td>
+										<td>` + d.title + `</td>
+										<td>` + d.description + `</td>
+										<td>` + d.author + `</td>
+										<td>` + d.category.name + `</td>
+									</tr>
+								`;
+								$("tbody").append(tr);
+							});
+						} else {
+							console.log("No data!");
+						}
+					},
+					error: function(err) {
+						console.log(data);
+					}
+				});
+			});
+		});
+	</script>
+</body>
+</html>

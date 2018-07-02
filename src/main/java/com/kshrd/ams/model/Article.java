@@ -1,9 +1,26 @@
 package com.kshrd.ams.model;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotBlank;
+
 public class Article {
+
+	@NotNull
 	private int id;
-	private String name;
+	@NotBlank
+	private String title;
+
+	private Category category;
+
+	@NotBlank
 	private String description;
+
+	private String thumbnail;
+
+	@NotBlank
+	@Size(min = 5, max = 10)
 	private String author;
 	private String createdDate;
 
@@ -15,12 +32,20 @@ public class Article {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	public String getDescription() {
@@ -29,6 +54,14 @@ public class Article {
 
 	public void setDescription(String description) {
 		this.description = description;
+	}
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
 	}
 
 	public String getAuthor() {
@@ -46,22 +79,27 @@ public class Article {
 	public void setCreatedDate(String createdDate) {
 		this.createdDate = createdDate;
 	}
-	
-	public Article() {}
 
-	public Article(int id, String name, String description, String author, String createdDate) {
+	public Article(int id, String title, Category category, String description, String thumbnail, String author,
+			String createdDate) {
 		super();
 		this.id = id;
-		this.name = name;
+		this.title = title;
+		this.category = category;
 		this.description = description;
+		this.thumbnail = thumbnail;
 		this.author = author;
 		this.createdDate = createdDate;
 	}
 
+	public Article() {
+		super();
+	}
+
 	@Override
 	public String toString() {
-		return "Article [id=" + id + ", name=" + name + ", description=" + description + ", author=" + author
-				+ ", createdDate=" + createdDate + "]";
+		return "Article [id=" + id + ", title=" + title + ", category=" + category + ", description=" + description
+				+ ", thumbnail=" + thumbnail + ", author=" + author + ", createdDate=" + createdDate + "]";
 	}
 
 }
