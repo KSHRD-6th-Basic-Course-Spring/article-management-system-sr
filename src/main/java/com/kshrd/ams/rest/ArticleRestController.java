@@ -21,8 +21,17 @@ import com.kshrd.ams.model.ArticleFilter;
 import com.kshrd.ams.service.article.ArticleService;
 import com.kshrd.ams.utility.Paging;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
+import springfox.documentation.annotations.ApiIgnore;
+
 @RestController
 @RequestMapping("/api/v1")
+@Api(description="API for article CRUD")
 public class ArticleRestController {
 	
 	private ArticleService articleService;
@@ -32,7 +41,19 @@ public class ArticleRestController {
 	}
 	
 	@GetMapping("/articles")
-	public Map<String, Object> findAll(ArticleFilter filter, Paging paging) {
+	@ApiImplicitParams({
+		@ApiImplicitParam(name="title", value="Search by article title", dataType="string", paramType="query", required=false),
+		@ApiImplicitParam(name="cate_id", value="Filter by category id", dataType="integer", paramType="query", required=false),
+		@ApiImplicitParam(name="page", value="Page number", dataType="integer", paramType="query", required=false, defaultValue="1")
+	})
+	@ApiResponses({
+		@ApiResponse(code=401, message="Unauthorize, you have to provide authentication."),
+		@ApiResponse(code=403, message="Access Forbidden"),
+		@ApiResponse(code=404, message="Rok min khernh")
+	})
+	@ApiOperation(value="List all articles and filter by category")
+	public Map<String, Object> findAll(@ApiIgnore ArticleFilter filter, @ApiIgnore Paging paging) {
+		
 		List<Article> articles = articleService.findAllFilter(filter, paging);
 		
 		Map<String, Object> response = new HashMap<>();
